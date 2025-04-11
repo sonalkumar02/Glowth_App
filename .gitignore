@@ -1,0 +1,34 @@
+# OS specific files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor/IDE specific files
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+
+# Node.js (if you add it later)
+node_modules/
+npm-debug.log
+yarn-error.log
+yarn-debug.log
+package-lock.json
+
+# Build directories (if you add them later)
+dist/
+build/
+
+# Local environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Debug logs
+debug.log
+*.log 
