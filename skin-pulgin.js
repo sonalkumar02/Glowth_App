@@ -212,7 +212,7 @@ function determineSkinTypeByColor(brightness, red, green, blue) {
       products: [
         {
           name: 'Gentle pH-balanced cleanser with neem extract',
-          link: 'https://www.mamaearth.in/product/mamaearth-ubtan-face-wash-with-turmeric-saffron-for-tan-removal'
+          link: 'https://mamaearth.in/product/organic-baby-shampoo-online'
         },
         {
           name: 'Vitamin C serum with turmeric extract (morning)',
@@ -281,7 +281,7 @@ function determineSkinTypeByColor(brightness, red, green, blue) {
       products: [
         {
           name: 'Fragrance-free gentle cleanser',
-          link: 'https://www.mamaearth.in/product/mamaearth-ubtan-face-wash-with-turmeric-saffron-for-tan-removal'
+          link: 'https://mamaearth.in/product/aloe-gentle-face-wash-with-aloe-vera-glycerin-for-normal-to-sensitive-skin-150-ml'
         },
         {
           name: 'Barrier-repairing serum with ceramides',
