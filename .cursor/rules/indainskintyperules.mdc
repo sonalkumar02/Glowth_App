@@ -1,0 +1,56 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# NEVER map North India or South India based only on skin tone
+def predict_region(luminance, chroma):
+    return "Region Prediction Disabled — focus on your personal skin characteristics."
+
+# Classify skin tone based on ITA angle (Individual Typology Angle)
+def classify_skin_tone(ita_angle):
+    if ita_angle > 55:
+        return "Very Light"
+    elif ita_angle > 41:
+        return "Light"
+    elif ita_angle > 28:
+        return "Intermediate"
+    elif ita_angle > 10:
+        return "Tan"
+    elif ita_angle > -30:
+        return "Brown"
+    else:
+        return "Dark"
+
+# Match UV risk level based on tone
+def uv_risk(skin_tone):
+    risk_levels = {
+        "Very Light": "Very High UV sensitivity — Use SPF 50+ daily.",
+        "Light": "High UV sensitivity — Use SPF 50.",
+        "Intermediate": "Moderate UV sensitivity — Use SPF 30-50.",
+        "Tan": "Moderate UV sensitivity — Use SPF 30+.",
+        "Brown": "Lower UV sensitivity — Still need SPF 30.",
+        "Dark": "Lowest UV sensitivity — But sunscreen is still necessary!"
+    }
+    return risk_levels.get(skin_tone, "Unknown risk — default to SPF 30.")
+
+# Very basic rule based on skin tone: darker skin = more prone to hyperpigmentation
+def pigmentation_risk(skin_tone):
+    if skin_tone in ["Tan", "Brown", "Dark"]:
+        return "Higher risk of hyperpigmentation — avoid strong peels or lasers without doctor advice."
+    else:
+        return "Lower risk — but sun protection still very important."
+
+# Full backend flow example
+def analyze_user(luminance, ita_angle, chroma):
+    skin_tone = classify_skin_tone(ita_angle)
+    uv_advice = uv_risk(skin_tone)
+    pigment_risk = pigmentation_risk(skin_tone)
+    region_msg = predict_region(luminance, chroma)
+    
+    return {
+        "Skin Tone": skin_tone,
+        "UV Sensitivity Advice": uv_advice,
+        "Pigmentation Risk Advice": pigment_risk,
+        "Region Prediction": region_msg  # Always neutral
+    }
