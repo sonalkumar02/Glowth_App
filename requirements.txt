@@ -9,3 +9,4 @@ matplotlib
 Pillow
 scikit-learn
 python-dotenv
+seaborn
