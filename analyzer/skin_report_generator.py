@@ -6,6 +6,10 @@ from typing import Dict, List, Tuple, Union
 import matplotlib.gridspec as gridspec
 from datetime import datetime
 import os
+import matplotlib.pyplot as plt
+import seaborn as sns  # <-- import seaborn
+
+sns.set_theme()  # <-- set seaborn style globally
 
 class SkinReportGenerator:
     def __init__(self):
