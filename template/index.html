@@ -4893,5 +4893,22 @@
     })();
     </script>
 
+<script>
+    async function analyzeSkin() {
+      const formData = new FormData();
+      formData.append("image", document.querySelector("#upload").files[0]);
+  
+      // Backend API call (Render ka URL use karo)
+      const response = await fetch("https://glowth-app.onrender.com", {
+        method: "POST",
+        body: formData
+      });
+      const data = await response.json();
+      console.log(data);
+      document.querySelector("#result").innerText = data.result;
+    }
+  </script>
+  
+
 </body>
 </html> 

@@ -18,6 +18,23 @@ import json as pyjson
 import hmac
 import hashlib
 
+
+app = Flask(__name__)
+
+@app.route("/")
+def home():
+    return "Glowth Backend Running!"
+
+@app.route("/analyze", methods=["POST"])
+def analyze():
+    file = request.files['image']   # frontend se bheja hua image
+    # yaha apna analyzer code call karo
+    result = analyzer.run_analysis(file)  
+    return jsonify({"result": result})
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)
+
 load_dotenv()
 app = Flask(__name__, template_folder='template', static_folder='static')
 CORS(app, resources={r"/api/*": {"origins": "*"}})
