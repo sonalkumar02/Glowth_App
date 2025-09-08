@@ -11,7 +11,6 @@ from datetime import datetime
 import json
 import cv2
 import numpy as np
-from supabase import create_client, Client
 import requests
 from typing import List, Dict
 from PIL import Image
