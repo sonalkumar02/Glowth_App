@@ -2651,6 +2651,69 @@
                 </div>
             </div>
 
+            <!-- Fixed Bottom Section for Waitlist and Feedback (Home Screen Only) -->
+            <div id="bottom-section" style="position:fixed;bottom:0;left:0;width:100vw;z-index:1000;background:rgba(255,255,255,0.97);box-shadow:0 -2px 16px rgba(0,0,0,0.07);display:flex;justify-content:center;align-items:center;padding:18px 0;gap:40px;">
+              <div style="display:flex;flex-direction:column;align-items:center;">
+                <span class="font-semibold text-gray-700 mb-1">Want early access?</span>
+                <button id="joinWaitlistBtn" class="bg-pink-500 text-white px-6 py-2 rounded-lg shadow hover:bg-pink-600 transition">Join Waitlist</button>
+              </div>
+              <div style="width:2px;height:40px;background:#e5e7eb;margin:0 32px;"></div>
+              <div style="display:flex;flex-direction:column;align-items:center;">
+                <span class="font-semibold text-gray-700 mb-1">Have feedback?</span>
+                <button id="feedbackBtn" class="bg-blue-500 text-white px-6 py-2 rounded-lg shadow hover:bg-blue-600 transition">Feedback</button>
+              </div>
+            </div>
+
+            <!-- Waitlist Modal -->
+            <div id="waitlistModal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.5);z-index:1001;justify-content:center;align-items:center;">
+              <div style="background:#fff;padding:2em;border-radius:8px;max-width:90vw;width:350px;text-align:center;">
+                <h2 class="text-xl font-bold mb-2">Join the Waitlist</h2>
+                <p class="mb-4">Be the first to know when we launch!</p>
+                <form id="waitlistForm">
+                  <input type="text" id="waitlistName" placeholder="Your Name" required class="w-full mb-3 px-3 py-2 border rounded"><br>
+                  <input type="email" id="waitlistEmail" placeholder="Your Email" required class="w-full mb-3 px-3 py-2 border rounded"><br>
+                  <button type="submit" class="bg-pink-500 text-white px-4 py-2 rounded hover:bg-pink-600 transition">Submit</button>
+                </form>
+                <div id="waitlistThankYou" style="display:none;">
+                  <p class="text-green-600 font-semibold">Thank you! You're on the waitlist.</p>
+                </div>
+                <button onclick="closeWaitlistModal()" class="mt-4 text-gray-500 hover:text-gray-700">Close</button>
+              </div>
+            </div>
+
+            <script>
+              // Feedback button opens Google Form
+              document.getElementById('feedbackBtn').onclick = function() {
+                window.open('https://forms.gle/gKULSbUDxChjdPgz9', '_blank'); // Your actual Google Form link
+              };
+
+              // Show waitlist modal
+              document.getElementById('joinWaitlistBtn').onclick = function() {
+                document.getElementById('waitlistModal').style.display = 'flex';
+                document.getElementById('waitlistThankYou').style.display = 'none';
+                document.getElementById('waitlistForm').style.display = 'block';
+              };
+
+              // Close modal
+              function closeWaitlistModal() {
+                document.getElementById('waitlistModal').style.display = 'none';
+              }
+
+              // Handle waitlist form submit
+              document.getElementById('waitlistForm').onsubmit = function(e) {
+                e.preventDefault();
+                var name = document.getElementById('waitlistName').value.trim();
+                var email = document.getElementById('waitlistEmail').value.trim();
+                if (!name || !email || !email.includes('@')) {
+                  alert('Please enter a valid name and email.');
+                  return;
+                }
+                // Optionally: send to your backend or Google Form via AJAX/fetch here
+                document.getElementById('waitlistForm').style.display = 'none';
+                document.getElementById('waitlistThankYou').style.display = 'block';
+              };
+            </script>
+
         </div>
     </main>
 
