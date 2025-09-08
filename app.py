@@ -3,9 +3,9 @@ from dotenv import load_dotenv
 from flask import Flask, request, jsonify, render_template, send_file
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
-from skin_analyzer import SkinAnalyzer
-from pollution_analyzer import PollutionAnalyzer
-from skin_report_generator import SkinReportGenerator
+from analyzer.skin_analyzer import SkinAnalyzer
+from analyzer.pollution_analyzer import PollutionAnalyzer
+from analyzer.skin_report_generator import SkinReportGenerator
 import tempfile
 from datetime import datetime
 import json
