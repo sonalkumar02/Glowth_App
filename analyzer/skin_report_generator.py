@@ -14,7 +14,6 @@ sns.set_theme()  # <-- set seaborn style globally
 class SkinReportGenerator:
     def __init__(self):
         # Set style for better visualizations
-        plt.style.use('seaborn')
         self.colors = {
             'primary': '#2E86C1',    # Blue
             'secondary': '#27AE60',  # Green
