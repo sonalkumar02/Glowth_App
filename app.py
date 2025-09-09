@@ -21,10 +21,7 @@ import hashlib
 
 from flask import send_from_directory
 
-# Route to serve assets folder
-@app.route('/assets/<path:filename>')
-def assets(filename):
-    return send_from_directory(os.path.join(app.root_path, 'assets'), filename)
+
 
 
 
