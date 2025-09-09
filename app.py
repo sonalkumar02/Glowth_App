@@ -1,4 +1,5 @@
 import os
+from flask_cors import CORS
 from dotenv import load_dotenv
 from flask import Flask, request, jsonify, render_template, send_file
 from flask_cors import CORS
@@ -18,6 +19,14 @@ import json as pyjson
 import hmac
 import hashlib
 
+from flask import send_from_directory
+
+# Route to serve assets folder
+@app.route('/assets/<path:filename>')
+def assets(filename):
+    return send_from_directory(os.path.join(app.root_path, 'assets'), filename)
+
+
 
 app = Flask(__name__)
 
@@ -34,6 +43,7 @@ def analyze():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
+    
 
 load_dotenv()
 app = Flask(__name__, template_folder='template', static_folder='static')

@@ -480,3 +480,4 @@ window.awardProductXP = function(price) {
 };
 
 // No module export; exposed via window.gamification
+

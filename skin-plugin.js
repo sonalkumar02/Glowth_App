@@ -1825,3 +1825,5 @@ function colorForScore(score) {
   if (score >= 33) return '#F59E0B'; // amber
   return '#10B981'; // green
 }
+
+
