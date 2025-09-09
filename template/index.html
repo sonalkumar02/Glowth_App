@@ -2532,7 +2532,7 @@
                         <!-- Product Card 1 -->
                         <div class="flex-shrink-0 w-[600px] w-full h-72 flex items-center gap-6 p-4 bg-white dark:bg-gray-800 rounded-xl ">
                           <!-- Image -->
-                          <img src="../assets/product1.jpg" alt="Sunscreen" class="w-72 h-64" />
+                          <img src="/assets/product1.jpg" alt="Sunscreen" class="w-72 h-64" />
                   
                           <!-- Info Section -->
                           <div class="w-full h-full flex flex-col justify-between">
@@ -2571,7 +2571,7 @@
                         <!-- Product Card 2 -->
                         <div class="flex-shrink-0 w-[600px] w-full h-72 flex items-center gap-6 p-4 bg-white dark:bg-gray-800 rounded-xl ">
                             <!-- Image -->
-                            <img src="../assets/de-tan.png" alt="Sunscreen" class="w-72 h-64" />
+                            <img src="/assets/de-tan.png" alt="Sunscreen" class="w-72 h-64" />
                     
                             <!-- Info Section -->
                             <div class="w-full h-full flex flex-col justify-between">
@@ -2610,7 +2610,7 @@
                         <!-- Product Card 3 -->
                         <div class="flex-shrink-0 w-[600px] w-full h-72 flex items-center gap-6 p-4 bg-white dark:bg-gray-800 rounded-xl ">
                             <!-- Image -->
-                            <img src="../assets/product1.jpg" alt="Sunscreen" class="w-72 h-64" />
+                            <img src="/assets/product1.jpg" alt="Sunscreen" class="w-72 h-64" />
                     
                             <!-- Info Section -->
                             <div class="w-full h-full flex flex-col justify-between">
@@ -3042,9 +3042,9 @@
             const module = await import(`./static/js/${page}.js`);
             module.render(document.getElementById('main-content'));
         }
-        pages.forEach(page => {
-            document.getElementById('icon-' + page).addEventListener('click', () => loadPage(page));
-        });
+        // pages.forEach(page => {
+        //     document.getElementById('icon-' + page).addEventListener('click', () => loadPage(page));
+        // });
         // Load home by default
         loadPage('home');
         
