@@ -1216,7 +1216,7 @@
                       <h2 class="text-xl font-bold text-gray-800" id="greeting-text">Good Morning, Glow Seeker!</h2>
                       
                         <div class="flex items-left space-x-2 mt-1">
-                            <span class="streak-badge cursor-pointer" id="skinScanBtn" onclick="initiateSkinScan()">🔥Quick Scan</span>
+                            <span class="streak-badge cursor-pointer" id="skinScanBtn">🔥Quick Scan</span>
                         </div>
                     </div>
                 </div>
@@ -4894,20 +4894,20 @@
     </script>
 
 <script>
-    async function analyzeSkin() {
-      const formData = new FormData();
-      formData.append("image", document.querySelector("#upload").files[0]);
-  
-      // Backend API call (Render ka URL use karo)
-      const response = await fetch("https://glowth-app.onrender.com", {
-        method: "POST",
-        body: formData
-      });
-      const data = await response.json();
-      console.log(data);
-      document.querySelector("#result").innerText = data.result;
-    }
-  </script>
+  async function analyzeSkin() {
+    const formData = new FormData();
+    formData.append("image", document.querySelector("#upload").files[0]);
+
+    // Backend API call (Render ka URL use karo)
+    const response = await fetch("https://glowth-app.onrender.com", {
+      method: "POST",
+      body: formData
+    });
+    const data = await response.json();
+    console.log(data);
+    document.querySelector("#result").innerText = data.result;
+  }
+</script>
   
 
 </body>
