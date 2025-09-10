@@ -1,5 +1,5 @@
 flask
-Flask-Cors
+flask-cors
 gunicorn
 requests
 numpy
