@@ -952,7 +952,7 @@
         .slider.round:before {
             border-radius: 50%;
         }
-        /* Add this to ensure the button is visible */
+        /* Add this to ensure the button is visible
         #quick-scan-btn {
             position: fixed;
             bottom: 20px;
@@ -978,7 +978,7 @@
         #quick-scan-btn.clicked {
             transform: translateY(1px);
             box-shadow: 0 2px 8px rgba(255,139,139,0.3);
-        }
+        } */
 
         /* Add these styles for the camera modal */
         .camera-modal {
@@ -3048,36 +3048,36 @@
         // Load home by default
         loadPage('home');
         
-        // Add Quick Scan button functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            const quickScanBtn = document.getElementById('quick-scan-btn');
-            if (quickScanBtn) {
-                quickScanBtn.addEventListener('click', function() {
-                    // Add visual feedback
-                    this.classList.add('clicked');
-                    setTimeout(() => {
-                        this.classList.remove('clicked');
-                    }, 150);
+        // // Add Quick Scan button functionality
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     const quickScanBtn = document.getElementById('quick-scan-btn');
+        //     if (quickScanBtn) {
+        //         quickScanBtn.addEventListener('click', function() {
+        //             // Add visual feedback
+        //             this.classList.add('clicked');
+        //             setTimeout(() => {
+        //                 this.classList.remove('clicked');
+        //             }, 150);
                     
-                    // The button is created dynamically in skin-plugin.js, so we need to wait for it
-                    setTimeout(() => {
-                        const skinScanBtns = document.querySelectorAll('button');
-                        const skinScanBtn = Array.from(skinScanBtns).find(btn => 
-                            btn.textContent && btn.textContent.includes('Indian Skin Analysis')
-                        );
-                        if (skinScanBtn) {
-                            // Add visual feedback to the target button too
-                            skinScanBtn.classList.add('clicked');
-                            setTimeout(() => {
-                                skinScanBtn.classList.remove('clicked');
-                            }, 150);
+        //             // The button is created dynamically in skin-plugin.js, so we need to wait for it
+        //             setTimeout(() => {
+        //                 const skinScanBtns = document.querySelectorAll('button');
+        //                 const skinScanBtn = Array.from(skinScanBtns).find(btn => 
+        //                     btn.textContent && btn.textContent.includes('Indian Skin Analysis')
+        //                 );
+        //                 if (skinScanBtn) {
+        //                     // Add visual feedback to the target button too
+        //                     skinScanBtn.classList.add('clicked');
+        //                     setTimeout(() => {
+        //                         skinScanBtn.classList.remove('clicked');
+        //                     }, 150);
                             
-                            skinScanBtn.click();
-                        }
-                    }, 100); // Reduced time for faster response
-                });
-            }
-        });
+        //                     skinScanBtn.click();
+        //                 }
+        //             }, 100); // Reduced time for faster response
+        //         });
+        //     }
+        // });
 
     </script>
 
