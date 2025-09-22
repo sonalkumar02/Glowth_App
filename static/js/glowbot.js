@@ -230,28 +230,6 @@ class GlowBot {
       return "unavailable";
     }
   }
-
-  async fetchGeminiReply(message) {
-    const geminiApiKey = "AIzaSyAlDILKQMSaVyuiij0T4CX21_x9fdoriPY";
-    const url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=" + geminiApiKey;
-
-    const body = {
-      contents: [{ parts: [{ text: message }] }]
-    };
-
-    try {
-      const response = await fetch(url, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body)
-      });
-      const data = await response.json();
-      const text = data.candidates?.[0]?.content?.parts?.[0]?.text || "Sorry, I couldn’t find a great answer.";
-      return { type: "text", text };
-    } catch {
-      return { type: "text", text: "Oops! Something went wrong while asking Gemini." };
-    }
-  }
 }
 
 const glowBot = new GlowBot();
