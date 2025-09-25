@@ -4098,7 +4098,38 @@
           if (scanBtn) {
             scanBtn.addEventListener('click', () => {
               addXP(1); // Scan = 1 XP
+
+              // Trigger the actual skin scan functionality
+              triggerSkinScan();
             });
+          }
+
+          //Function to trigger the skin scan
+          function triggerSkinScan() {
+            // Wait for the skin-plugin.js to load and create the button
+            const waitForSkinPlugin = () => {
+              const skinScanBtns= document.querySelectorAll('button');
+              const skinScanBtn = Array.from(skinScanBtn).find(btn =>
+                btn.textContent && btn.textContent.includes('Indian Skin Analysis')
+              );
+
+              if (skinScanBtn) {
+                // Add visual feedback
+                skinScanBtn.classList.add('clicked');
+                setTimeout(() => {
+                  skinScanBtn.classList.remove('clicked')
+                }, 150);
+
+                // Trigger the actual scan
+                skinScanBtn.click();
+              } else {
+                // If button not found, try again after after a short delay
+                setTimeout(waitForSkinPlugin, 100);
+              }
+            };
+
+            // Start waiting fo the skin plugin button
+            waitForSkinPlugin();
           }
       
           // 💧 Hydration checklist buttons
@@ -4908,6 +4939,28 @@
     document.querySelector("#result").innerText = data.result;
   }
 </script>
+
+<script>
+// Debug script to check if everything loads correctly
+window.addEventListener('load', function() {
+    console.log('Page loaded, checking components...');
+    
+    // Check if skinScanBtn exists
+    const skinScanBtn = document.getElementById('skinScanBtn');
+    console.log('skinScanBtn found:', !!skinScanBtn);
+    
+    // Check if skin-plugin.js loaded
+    const skinPluginBtn = document.querySelector('button[id="skin-scan-btn-main"]');
+    console.log('skin-plugin.js button found:', !!skinPluginBtn);
+    
+    // Check if TensorFlow is available
+    console.log('TensorFlow available:', typeof tf !== 'undefined');
+    
+    // Check if MobileNet is available
+    console.log('MobileNet available:', typeof mobilenet !== 'undefined');
+});
+</script>
+
   
 
 </body>

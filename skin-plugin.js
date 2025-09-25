@@ -1,4 +1,19 @@
 // Cursor AI Se Likha Hua Code (Aajao Client Pakdo)
+
+// Ensure this runs on Render
+(function() {
+  'use strict';
+
+  // Check if we're in a browser environment
+  if (typeof window === 'undefined') {
+    return;
+  }
+
+  // Mark that skin-plugin is loaded
+  window.skinPluginLoaded = true;
+
+})();
+
 // Step 1: Button Add Karo
 document.addEventListener('DOMContentLoaded', function() {
     const skinScanBtn = document.createElement('button');

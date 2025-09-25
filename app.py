@@ -24,6 +24,18 @@ from flask import send_from_directory
 app = Flask(__name__)
 CORS(app)
 
+@app.route('/skin-plugin.js')
+def skin_plugin():
+    return send_file('skin-plugin.js', mimetype='application/javascript')
+
+@app.route('/static/<path:filename>')
+def static_file(filename):
+    return send_from_directory('static', filename)
+
+@app.route('/assets/<path:filename>')
+def assets(filename):
+    return send_from_directory('template/assets', filename)
+
 @app.route("/")
 def home():
     return "Glowth Backend Running!"
