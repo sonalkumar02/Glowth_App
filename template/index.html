@@ -2717,11 +2717,11 @@
         </div>
     </main>
 
-    <script src="../skin-plugin.js"></script>
-    <script src="../static/js/gamification.js"></script>
-    <script src="../static/js/glowbot.js"></script>
-    <script src="../static/js/goals.js"></script>
-    <script src="../static/js/glowshield.js"></script>
+    <script src="/skin-plugin.js"></script>
+    <script src="/static/js/gamification.js"></script>
+    <script src="/static/js/glowbot.js"></script>
+    <script src="/static/js/goals.js"></script>
+    <script src="/static/js/glowshield.js"></script>
 
     <!-- Carousel Script -->
     <!-- <script>
@@ -4109,7 +4109,7 @@
             // Wait for the skin-plugin.js to load and create the button
             const waitForSkinPlugin = () => {
               const skinScanBtns= document.querySelectorAll('button');
-              const skinScanBtn = Array.from(skinScanBtn).find(btn =>
+              const skinScanBtn = Array.from(skinScanBtns).find(btn =>
                 btn.textContent && btn.textContent.includes('Indian Skin Analysis')
               );
 
@@ -4117,18 +4117,18 @@
                 // Add visual feedback
                 skinScanBtn.classList.add('clicked');
                 setTimeout(() => {
-                  skinScanBtn.classList.remove('clicked')
+                  skinScanBtn.classList.remove('clicked');
                 }, 150);
 
                 // Trigger the actual scan
                 skinScanBtn.click();
               } else {
-                // If button not found, try again after after a short delay
+                // If button not found, try again after a short delay
                 setTimeout(waitForSkinPlugin, 100);
               }
             };
 
-            // Start waiting fo the skin plugin button
+            // Start waiting for the skin plugin button
             waitForSkinPlugin();
           }
       

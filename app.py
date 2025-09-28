@@ -21,47 +21,14 @@ import hashlib
 
 from flask import send_from_directory
 
-app = Flask(__name__)
-CORS(app)
-
-@app.route('/skin-plugin.js')
-def skin_plugin():
-    return send_file('skin-plugin.js', mimetype='application/javascript')
-
-@app.route('/static/<path:filename>')
-def static_file(filename):
-    return send_from_directory('static', filename)
-
-@app.route('/assets/<path:filename>')
-def assets(filename):
-    return send_from_directory('template/assets', filename)
-
-@app.route("/")
-def home():
-    return "Glowth Backend Running!"
-
-@app.route("/analyze", methods=["POST"])
-def analyze():
-    file = request.files['image']   # frontend se bheja hua image
-    # yaha apna analyzer code call karo
-    result = analyzer.run_analysis(file)  
-    return jsonify({"result": result})
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
-    
-
+# Load environment variables
 load_dotenv()
+
+# Initialize Flask app
 app = Flask(__name__, template_folder='template', static_folder='static')
 CORS(app, resources={r"/api/*": {"origins": "*"}})
 app.config['UPLOAD_FOLDER'] = 'uploads'
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
-
-# # Initialize Supabase client
-# supabase: Client = create_client(
-#     os.getenv('SUPABASE_URL'),
-#     os.getenv('SUPABASE_KEY')
-# )
 
 # Ensure upload directory exists
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
@@ -76,12 +43,33 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-@app.route('/')
-def index():
+# Static file routes
+@app.route('/skin-plugin.js')
+def skin_plugin():
+    return send_file('skin-plugin.js', mimetype='application/javascript')
+
+@app.route('/static/<path:filename>')
+def static_file(filename):
+    return send_from_directory('static', filename)
+
+@app.route('/assets/<path:filename>')
+def assets(filename):
+    return send_from_directory('template/assets', filename)
+
+# Main routes
+@app.route("/")
+def home():
     return render_template('index.html')
 
-@app.route('/analyze', methods=['POST'])
+@app.route("/analyze", methods=["POST"])
 def analyze():
+    file = request.files['image']   # frontend se bheja hua image
+    # yaha apna analyzer code call karo
+    result = skin_analyzer.run_analysis(file)  
+    return jsonify({"result": result})
+
+@app.route('/analyze', methods=['POST'])
+def analyze_upload():
     try:
         # Check if file was uploaded
         if 'file' not in request.files:
@@ -249,7 +237,7 @@ def load_server_compatibility_map() -> Dict[str, dict]:
         },
         'aha': {
             'incompatible': ['retinol', 'benzoyl peroxide'],
-            'suggestion': 'Limit AHA to 2-3x/week; don’t pair with retinoids same night.',
+            'suggestion': "Limit AHA to 2-3x/week; don't pair with retinoids same night.",
             'alternatives': ['PHA (gentler acid)', 'enzyme exfoliant']
         },
         'bha': {
@@ -318,12 +306,13 @@ def analyze_compatibility(ings1: List[str], ings2: List[str]) -> dict:
 def fetch_alternative_products(skin_type: str) -> List[dict]:
     """Optionally return recommended products from Supabase by skin type."""
     try:
-        products_response = supabase.table('products').select('*').filter(
-            'skin_types', 'cs', f"{{{skin_type}}}"
-        ).execute()
-        if getattr(products_response, 'error', None):
-            return []
-        return products_response.data or []
+        # products_response = supabase.table('products').select('*').filter(
+        #     'skin_types', 'cs', f"{{{skin_type}}}"
+        # ).execute()
+        # if getattr(products_response, 'error', None):
+        #     return []
+        # return products_response.data or []
+        return []
     except Exception:
         return []
 
@@ -383,14 +372,14 @@ def get_daily_quests():
             return jsonify({'error': 'User ID required'}), 400
 
         # Get user's daily quests from Supabase
-        response = supabase.table('users').select('daily_quests').eq('id', user_id).single()
+        # response = supabase.table('users').select('daily_quests').eq('id', user_id).single()
         
-        if response.error:
-            return jsonify({'error': str(response.error)}), 500
+        # if response.error:
+        #     return jsonify({'error': str(response.error)}), 500
 
         return jsonify({
             'success': True,
-            'quests': response.data.get('daily_quests', [])
+            'quests': []
         })
 
     except Exception as e:
@@ -407,12 +396,12 @@ def complete_quest():
             return jsonify({'error': 'User ID and Quest ID required'}), 400
 
         # Update quest completion in Supabase
-        response = supabase.table('users').update({
-            'daily_quests': supabase.raw(f"array_append(daily_quests, {quest_id})")
-        }).eq('id', user_id)
+        # response = supabase.table('users').update({
+        #     'daily_quests': supabase.raw(f"array_append(daily_quests, {quest_id})")
+        # }).eq('id', user_id)
 
-        if response.error:
-            return jsonify({'error': str(response.error)}), 500
+        # if response.error:
+        #     return jsonify({'error': str(response.error)}), 500
 
         return jsonify({'success': True})
 
@@ -427,14 +416,14 @@ def get_streak():
             return jsonify({'error': 'User ID required'}), 400
 
         # Get user's streak from Supabase
-        response = supabase.table('users').select('streak').eq('id', user_id).single()
+        # response = supabase.table('users').select('streak').eq('id', user_id).single()
         
-        if response.error:
-            return jsonify({'error': str(response.error)}), 500
+        # if response.error:
+        #     return jsonify({'error': str(response.error)}), 500
 
         return jsonify({
             'success': True,
-            'streak': response.data.get('streak', 0)
+            'streak': 0
         })
 
     except Exception as e:
@@ -449,22 +438,22 @@ def get_product_recommendations():
             return jsonify({'error': 'User ID required'}), 400
 
         # Get user profile and product recommendations from Supabase
-        response = supabase.table('users').select('skin_type, concerns').eq('id', user_id).single()
+        # response = supabase.table('users').select('skin_type, concerns').eq('id', user_id).single()
         
-        if response.error:
-            return jsonify({'error': str(response.error)}), 500
+        # if response.error:
+        #     return jsonify({'error': str(response.error)}), 500
 
         # Get matching products
-        products_response = supabase.table('products').select('*').filter(
-            'skin_types', 'cs', f"{{{response.data['skin_type']}}}"
-        ).execute()
+        # products_response = supabase.table('products').select('*').filter(
+        #     'skin_types', 'cs', f"{{{response.data['skin_type']}}}"
+        # ).execute()
 
-        if products_response.error:
-            return jsonify({'error': str(products_response.error)}), 500
+        # if products_response.error:
+        #     return jsonify({'error': str(products_response.error)}), 500
 
         return jsonify({
             'success': True,
-            'products': products_response.data
+            'products': []
         })
 
     except Exception as e:
@@ -483,15 +472,15 @@ def log_mood():
             return jsonify({'error': 'User ID, mood, and stress level required'}), 400
 
         # Save mood entry to Supabase
-        response = supabase.table('mood_logs').insert({
-            'user_id': user_id,
-            'mood': mood,
-            'stress': stress,
-            'timestamp': datetime.utcnow().isoformat()
-        }).execute()
+        # response = supabase.table('mood_logs').insert({
+        #     'user_id': user_id,
+        #     'mood': mood,
+        #     'stress': stress,
+        #     'timestamp': datetime.utcnow().isoformat()
+        # }).execute()
 
-        if response.error:
-            return jsonify({'error': str(response.error)}), 500
+        # if response.error:
+        #     return jsonify({'error': str(response.error)}), 500
 
         return jsonify({'success': True})
 
@@ -506,18 +495,18 @@ def get_correlations():
             return jsonify({'error': 'User ID required'}), 400
 
         # Get mood and skin condition history from Supabase
-        mood_response = supabase.table('mood_logs').select('*').eq('user_id', user_id).order('timestamp', desc=True).limit(30).execute()
-        skin_response = supabase.table('skin_logs').select('*').eq('user_id', user_id).order('timestamp', desc=True).limit(30).execute()
+        # mood_response = supabase.table('mood_logs').select('*').eq('user_id', user_id).order('timestamp', desc=True).limit(30).execute()
+        # skin_response = supabase.table('skin_logs').select('*').eq('user_id', user_id).order('timestamp', desc=True).limit(30).execute()
 
-        if mood_response.error or skin_response.error:
-            return jsonify({'error': 'Error fetching data'}), 500
+        # if mood_response.error or skin_response.error:
+        #     return jsonify({'error': 'Error fetching data'}), 500
 
         # Calculate correlations
-        correlations = calculate_correlations(mood_response.data, skin_response.data)
+        # correlations = calculate_correlations(mood_response.data, skin_response.data)
 
         return jsonify({
             'success': True,
-            'correlations': correlations
+            'correlations': []
         })
 
     except Exception as e:
@@ -543,23 +532,27 @@ def find_skin_twin():
             return jsonify({'error': 'User ID required'}), 400
 
         # Get user profile from Supabase
-        user_response = supabase.table('users').select('*').eq('id', user_id).single()
+        # user_response = supabase.table('users').select('*').eq('id', user_id).single()
         
-        if user_response.error:
-            return jsonify({'error': str(user_response.error)}), 500
+        # if user_response.error:
+        #     return jsonify({'error': str(user_response.error)}), 500
 
         # Find potential skin twins
-        twins_response = supabase.table('users').select('*').neq('id', user_id).execute()
+        # twins_response = supabase.table('users').select('*').neq('id', user_id).execute()
         
-        if twins_response.error:
-            return jsonify({'error': str(twins_response.error)}), 500
+        # if twins_response.error:
+        #     return jsonify({'error': str(twins_response.error)}), 500
 
         # Calculate match scores and find best match
-        best_match = find_best_match(user_response.data, twins_response.data)
+        # best_match = find_best_match(user_response.data, twins_response.data)
 
         return jsonify({
             'success': True,
-            'twin': best_match
+            'twin': {
+                'id': '123',
+                'name': 'Sarah',
+                'match_score': 0.85
+            }
         })
 
     except Exception as e:
@@ -700,4 +693,4 @@ def payments_verify():
         return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
-    app.run(debug=True) 
+    app.run(debug=True, host="0.0.0.0", port=5000)
